@@ -14,7 +14,54 @@ var nochat = require('nochat')
     , wechatAuth = nochat.wechatAuth
     , wechatHelper = nochat.wechatHelper;
 
-var app = express();
+var app = express()
+   , APPID = 'wx536ca9a0d796f541'
+   , APPSECRET = '1dccd67b37964c19952eca8d46d25aa5'
+   , ISMENUSET = false
+   , requestify = require('requestify');
+
+var MENUDATA = {
+    button: [
+        {
+            type: 'click',
+            name: '门店位置',
+            key: "LOCATION"
+        },
+        {
+            type: 'view',
+            name: '新品展示',
+            url: 'http://item-displaying.herokuapp.com'
+        },
+        {
+            type: 'click',
+            name: '会员卡',
+            key: 'MEMBERSHIP'
+        }
+    ]
+};
+
+ //定时更新Access Token
+var updateAccessToken = function(){
+  requestify.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+APPID+'&secret='+APPSECRET).then(function(response){
+      var token = response.getBody()['access_token'];
+      if (token){
+        app.set('ACCESSTOKEN', token);
+
+        if (!ISMENUSET){
+          //set menu
+          requestify.post('https://api.weixin.qq.com/cgi-bin/menu/create?access_token='+token, MENUDATA).then(function(res){
+            //TODO: do nothing for now
+            ISMENUSET = true;
+          });
+        }
+      }
+      console.log("TOKEN: "+token);
+  });
+};
+
+ app.set('ACCESSTOKEN', '');
+ updateAccessToken();
+ setInterval(updateAccessToken, 7100*1000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,6 +80,9 @@ app.use('/users', users);
 
 app.get('/weixin', wechatAuth(TOKEN));
 
+app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
+    console.log(req.wechatMessage);
+});
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
