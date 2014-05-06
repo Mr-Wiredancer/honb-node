@@ -82,9 +82,10 @@ app.use('/users', users);
 app.get('/weixin', wechatAuth(TOKEN));
 
 app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
-  res.send( req.wechatMessage.makeResponseMessage('text', {content:'testing'}).toXML() );
-  // var msg = req.wechatMessage.makeResponseMessage('text', {content:req.wechatMessage});
-  // console.log(msg);
+  // res.send( req.wechatMessage.makeResponseMessage('text', {content:'testing'}).toXML() );
+  var msg = req.wechatMessage.makeResponseMessage('text', {content:req.wechatMessage});
+  console.log(msg.toXML());
+  req.send('');
   // req.wechatMessage.sendResponseMessage(req, res, 'text', {content:req.wechatMessage});
 })
 
