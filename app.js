@@ -8,6 +8,12 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var TOKEN = 'DXHACKERS';
+var nochat = require('nochat')
+    , WechatMessage = nochat.WechatMessage
+    , wechatAuth = nochat.wechatAuth
+    , wechatHelper = nochat.wechatHelper;
+
 var app = express();
 
 // view engine setup
@@ -23,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+app.get('/weixin', wechatAuth(TOKEN));
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
