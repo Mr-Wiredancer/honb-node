@@ -4,6 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var util = require('util');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -81,7 +82,7 @@ app.use('/users', users);
 app.get('/weixin', wechatAuth(TOKEN));
 
 app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
-    console.log(req.wechatMessage);
+    req.wechatMessage.sendResponseMessage(req, res, 'text', util.format('%j', req.wechatMessage));
 });
 
 /// catch 404 and forwarding to error handler
