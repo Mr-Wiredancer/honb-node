@@ -82,8 +82,10 @@ app.use('/users', users);
 app.get('/weixin', wechatAuth(TOKEN));
 
 app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
-  res.send(req.wechatMessage.makeResponseMessage('text', 'test').toXML());
-});
+  res.send('');
+  var msg = req.wechatMessage.makeResponseMessage('text', 'test');
+  console.log(msg);
+})
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
