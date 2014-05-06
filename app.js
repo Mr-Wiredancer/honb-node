@@ -83,7 +83,7 @@ app.get('/weixin', wechatAuth(TOKEN));
 
 app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
   res.send('');
-  var msg = req.wechatMessage.makeResponseMessage('text', {content:util.format('%j', req.wechatMessage)});
+  var msg = req.wechatMessage.makeResponseMessage('text', {content:'test'});
   console.log(msg);
 })
 
