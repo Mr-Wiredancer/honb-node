@@ -125,7 +125,7 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
       content: [
         {
            "title":"Happy Day1",
-           "description":"Is Really A Happy Day",
+           "description":"Is It Really A Happy Day",
            "picurl":"http://t3.gstatic.com/images?q=tbn:ANd9GcR8RgSOk5pGq7eynCLMIvg_bzRAQ7IckAeTYU26bB3Sm2WI62yl"
         }
       ]
