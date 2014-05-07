@@ -132,7 +132,8 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
     });
   } 
 
-  req.wechatMessage.sendResponseMessage(req, res, 'text', {content:util.format('%j', req.wechatMessage)});
+  res.send('');
+  // req.wechatMessage.sendResponseMessage(req, res, 'text', {content:util.format('%j', req.wechatMessage)});
   
 })
 
