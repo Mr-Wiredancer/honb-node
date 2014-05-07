@@ -126,14 +126,11 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
         {
            "title":"Happy Day1",
            "description":"Is Really A Happy Day",
-           "url":"URL",
-           "picurl":"PIC_URL"
+           "picurl":"http://t3.gstatic.com/images?q=tbn:ANd9GcR8RgSOk5pGq7eynCLMIvg_bzRAQ7IckAeTYU26bB3Sm2WI62yl"
         },
         {
            "title":"Happy Day2",
-           "description":"Is Really A Happy Day",
-           "url":"URL",
-           "picurl":"PIC_URL"
+           "description":"Is Really A Happy Day"
         }
       ]
     });
