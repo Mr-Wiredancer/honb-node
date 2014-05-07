@@ -9,6 +9,36 @@ var util = require('util');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var SHOPS = [
+  {
+    x: 113.31745, y:23.13436,
+    title: 'HonB天河店',
+    addr: '广州市天河区'
+  },
+  {
+    x: 113.45632, y:23.09639,
+    title: 'HonB黄埔店',
+    addr: '广州市黄埔区'
+  },
+  {
+    x: 113.892, y: 22.56052,
+    title: 'HonB宝安店',
+    addr: '深圳市宝安区'
+  },
+  {
+    x: 113.93732, y: 22.48694,
+    title: 'HonB蛇口店',
+    addr: '深圳市蛇口区'
+  },
+  {
+    x: 113.74643, y: 23.01631,
+    title: 'HonB东莞店',
+    addr: '东莞市'
+  }
+];
+
+var usersRequested = {};
+
 var TOKEN = 'DXHACKERS';
 var nochat = require('nochat')
     , WechatMessage = nochat.WechatMessage
@@ -82,9 +112,19 @@ app.use('/users', users);
 app.get('/weixin', wechatAuth(TOKEN));
 
 app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
-  // res.send( req.wechatMessage.makeResponseMessage('text', {content:'testing'}).toXML() );
+  var msg = req.wechatMessage;
+
+  if (msg.isClickEvent() && msg.EventKey === 'LOCATION'){
+    msg.sendResponseMessage(req, res, 'text', {
+      content: '要搜索你附近的HonB门店，请在微信右下角点击［＋］后发送［位置］给我吧～'
+    });
+  } else if(msg.isLocation()){
+    var x = msg['Location_Y'], y = msg['Location_X']; //腾讯地图跟微信的坐标信息貌似反过来了
+    //TODO:
+  } 
+
   req.wechatMessage.sendResponseMessage(req, res, 'text', {content:util.format('%j', req.wechatMessage)});
-  // req.wechatMessage.sendResponseMessage(req, res, 'text', {content:req.wechatMessage});
+  
 })
 
 /// catch 404 and forwarding to error handler
