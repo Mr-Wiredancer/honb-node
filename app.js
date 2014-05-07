@@ -106,6 +106,31 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var getShops = function(x, y){
+    var shops = [{
+       "title":"HonB门店，总有一个在你身边",
+       "description":"抠鼻屎",
+       "picurl":"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTIdQiHqKv2zU383NrKsvOJdDV_sjizpcdyQDd50NNrg_juiHo0"
+    }];
+
+    var newCopy = SHOPS.slice();
+    newCopy.sort(function(loca, locb){
+      var result1 = Math.pow(loca.x-x, 2) + Math.pow(loca.y - y, 2)
+        , result2 = Math.pow(locb.x-x, 2) + Math.pow(locb.y - y, 2);
+
+      return result1-result2;
+    });
+
+    for (var i = 0; i<newCopy.length; i++){
+      shops.push({
+        'title': newCopy[i].title, 
+        'url': util.format("http://apis.map.qq.com/uri/v1/marker?marker=coord:%d,%d;title:%s;addr:%s&coord_type=1", newCopy[i].x, newCopy[i].y, newCopy[i].title, newCopy[i].addr)
+      });
+    }
+
+    return shops;
+}
+
 app.use('/', routes);
 app.use('/users', users);
 
@@ -119,20 +144,10 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
       content: '要搜索你附近的HonB门店，请在微信右下角点击［＋］后发送［位置］给我吧～'
     });
   } else if(msg.isLocation()){
-    var x = msg['Location_Y'], y = msg['Location_X']; //腾讯地图跟微信的坐标信息貌似反过来了
+    var x = parseFloat(msg['Location_Y']), y = parseFloat(msg['Location_X']); //腾讯地图跟微信的坐标信息貌似反过来了
     //TODO:
     msg.sendResponseMessage(req, res, 'news',
-      [
-        {
-           "title":"Happy Day1",
-           "description":"Is It Really A Happy Day",
-           "picurl":"http://t3.gstatic.com/images?q=tbn:ANd9GcR8RgSOk5pGq7eynCLMIvg_bzRAQ7IckAeTYU26bB3Sm2WI62yl"
-        },
-        {
-          "title": 't1',
-          "description": 't2'
-        }
-      ]
+      getShops(x, y)
     );
   } 
 
