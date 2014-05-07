@@ -121,15 +121,19 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
   } else if(msg.isLocation()){
     var x = msg['Location_Y'], y = msg['Location_X']; //腾讯地图跟微信的坐标信息貌似反过来了
     //TODO:
-    msg.sendResponseMessage(req, res, 'news', {
-      content: [
+    msg.sendResponseMessage(req, res, 'news',
+      [
         {
            "title":"Happy Day1",
            "description":"Is It Really A Happy Day",
            "picurl":"http://t3.gstatic.com/images?q=tbn:ANd9GcR8RgSOk5pGq7eynCLMIvg_bzRAQ7IckAeTYU26bB3Sm2WI62yl"
+        },
+        {
+          "title": 't1',
+          "description": 't2'
         }
       ]
-    });
+    );
   } 
 
   res.send('');
