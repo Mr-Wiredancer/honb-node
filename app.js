@@ -140,14 +140,14 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
   var msg = req.wechatMessage;
 
   if (msg.isClickEvent() && msg.EventKey === 'LOCATION'){
-    msg.sendResponseMessage(req, res, 'text', {
-      content: '要搜索你附近的HonB门店，请在微信右下角点击［＋］后发送［位置］给我吧～'
-    });
-  } else if(msg.isLocation()){
-    var x = parseFloat(msg['Location_Y']), y = parseFloat(msg['Location_X']); //腾讯地图跟微信的坐标信息貌似反过来了
+  //   msg.sendResponseMessage(req, res, 'text', {
+  //     content: '要搜索你附近的HonB门店，请在微信右下角点击［＋］后发送［位置］给我吧～'
+  //   });
+  // } else if(msg.isLocation()){
+    // var x = parseFloat(msg['Location_Y']), y = parseFloat(msg['Location_X']); //腾讯地图跟微信的坐标信息貌似反过来了
     //TODO:
     msg.sendResponseMessage(req, res, 'news',
-      getShops(x, y)
+      getShops(113, 22)
     );
   } 
 
