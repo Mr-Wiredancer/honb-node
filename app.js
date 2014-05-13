@@ -11,27 +11,27 @@ var users = require('./routes/users');
 
 var SHOPS = [
   {
-    x: 113.31745, y:23.13436,
+    y: 113.31745, z:23.13436,
     title: 'HonB天河店',
     addr: '广州市天河区'
   },
   {
-    x: 113.45632, y:23.09639,
+    y: 113.45632, x:23.09639,
     title: 'HonB黄埔店',
     addr: '广州市黄埔区'
   },
   {
-    x: 113.892, y: 22.56052,
+    y: 113.892, x: 22.56052,
     title: 'HonB宝安店',
     addr: '深圳市宝安区'
   },
   {
-    x: 113.93732, y: 22.48694,
+    y: 113.93732, x: 22.48694,
     title: 'HonB蛇口店',
     addr: '深圳市蛇口区'
   },
   {
-    x: 113.74643, y: 23.01631,
+    y: 113.74643, x: 23.01631,
     title: 'HonB东莞店',
     addr: '东莞市'
   }
@@ -146,10 +146,10 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
   // } else if(msg.isLocation()){
     // var x = parseFloat(msg['Location_Y']), y = parseFloat(msg['Location_X']); //腾讯地图跟微信的坐标信息貌似反过来了
     //TODO:
-    console.log(util.format("%j", getShops(113, 22)));
-    
+    console.log(util.format("%j", getShops(22, 113)));
+
     msg.sendResponseMessage(req, res, 'news',
-      getShops(113, 22)
+      getShops(22, 113)
     );
   } 
 
