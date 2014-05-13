@@ -146,9 +146,15 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
   // } else if(msg.isLocation()){
     // var x = parseFloat(msg['Location_Y']), y = parseFloat(msg['Location_X']); //腾讯地图跟微信的坐标信息貌似反过来了
     //TODO:
-    msg.sendResponseMessage(req, res, 'news',
-      getShops(113, 22)
-    );
+
+
+    // msg.sendResponseMessage(req, res, 'news',
+    //   getShops(113, 22)
+    // );
+    msg.sendResponseMessage(req, res, 'text', {
+      content: getShops(113, 22)[0].url;
+
+    });
   } 
 
   res.send('');
