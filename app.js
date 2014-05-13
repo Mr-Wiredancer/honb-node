@@ -152,7 +152,7 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
     //   getShops(113, 22)
     // );
     msg.sendResponseMessage(req, res, 'text', {
-      content: getShops(113, 22)[0].url;
+      content: getShops(113, 22)[0].url
 
     });
   } 
