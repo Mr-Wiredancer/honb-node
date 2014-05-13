@@ -124,7 +124,8 @@ var getShops = function(x, y){
     for (var i = 0; i<newCopy.length; i++){
       shops.push({
         'title': newCopy[i].title, 
-        'url': util.format("http://apis.map.qq.com/uri/v1/marker?marker=coord:%d,%d;title:%s;addr:%s&coord_type=1", newCopy[i].x, newCopy[i].y, newCopy[i].title, newCopy[i].addr)
+        // 'url': util.format("http://apis.map.qq.com/uri/v1/marker?marker=coord:%d,%d;title:%s;addr:%s&coord_type=1", newCopy[i].x, newCopy[i].y, newCopy[i].title, newCopy[i].addr)
+        'url': util.format("http://api.map.baidu.com/marker?location=%d,%d&title=%s&content=%s&output=html&src=东西科技|honb助手", newCopy[i].x, newCopy[i].y, newCopy[i].title, newCopy[i].addr)
       });
     }
 
