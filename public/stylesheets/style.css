@@ -1,8 +1,29 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#counter {
+	height:120px;
+	width:250px;
+	margin:0 auto;
+	/*background-color:red;*/
+	font-size:100px;
+	text-align: center;
+	color: white;
 }
 
-a {
-  color: #00B7FF;
+#button {
+	margin:0 auto;
+	width:250px;
+}
+
+img {
+	width:250px;
+}
+
+#container {
+	background-image:url('/images/grey_wash_wall.png');
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+html, body {
+	height:100%;
 }

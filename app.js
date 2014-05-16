@@ -64,9 +64,20 @@ var MENUDATA = {
             url: 'http://item-displaying.herokuapp.com'
         },
         {
-            type: 'click',
             name: '会员卡',
-            key: 'MEMBERSHIP'
+            "sub_button": [
+              {
+                type: 'click',
+                name: '会员信息',
+                key: 'INFO'
+              },
+              {
+                type: 'view',
+                name: '爱心计划',
+                url: 'http://dx-honb.herokuapp.com/counter'
+              }
+
+            ]
         }
     ]
 };
@@ -134,6 +145,9 @@ var getShops = function(x, y){
 
 app.use('/', routes);
 app.use('/users', users);
+app.get('/counter', function(req, res){
+  res.render('counter', {});
+});
 
 app.get('/weixin', wechatAuth(TOKEN));
 
