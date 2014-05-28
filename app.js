@@ -79,7 +79,7 @@ var MENUDATA = {
               {
                 type: 'view',
                 name: '测试oauth',
-                url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base&state=a#wechat_redirect'
+                url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+encodeURIComponent('http://dx-honb.herokuapp.com/code')+'&response_type=code&scope=snsapi_base&state=a#wechat_redirect'
               }
 
             ]
