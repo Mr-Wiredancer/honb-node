@@ -75,6 +75,11 @@ var MENUDATA = {
                 type: 'view',
                 name: '爱心计划',
                 url: 'http://dx-honb.herokuapp.com/counter'
+              },
+              {
+                type: 'view',
+                name: '测试oauth',
+                url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base&state=a#wechat_redirect'
               }
 
             ]
@@ -147,6 +152,11 @@ app.use('/', routes);
 app.use('/users', users);
 app.get('/counter', function(req, res){
   res.render('counter', {});
+});
+
+app.get('/code', function(req, res){
+  console.log(req.params);
+  res.send();
 });
 
 app.get('/weixin', wechatAuth(TOKEN));
