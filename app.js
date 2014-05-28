@@ -155,7 +155,7 @@ app.get('/counter', function(req, res){
 });
 
 app.get('/code', function(req, res){
-  console.log(req.params);
+  console.log(req.query);
   res.send();
 });
 
