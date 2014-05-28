@@ -156,6 +156,10 @@ app.get('/counter', function(req, res){
 
 app.get('/code', function(req, res){
   console.log(req.query);
+  requestify.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid='+ APPID+'&secret='+APPSECRET+'&code='+req.query.code+'&grant_type=authorization_code').then(function(response){
+      console.log(response.getBody());
+
+  });
   res.send();
 });
 
