@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('util');
 
+var WAITERS = {};
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -68,7 +70,7 @@ var MENUDATA = {
             "sub_button": [
               {
                 type: 'click',
-                name: '会员信息',
+                name: '我的会员卡',
                 key: 'INFO'
               },
               {
@@ -168,7 +170,17 @@ app.get('/weixin', wechatAuth(TOKEN));
 app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
   var msg = req.wechatMessage;
 
-  if (msg.isClickEvent() && msg.EventKey === 'LOCATION'){
+  if ( (msg.isScanAfterSubscribeEvent() && msg.EventKey === '1') || (msg.isScanBeforeSubscribeEvent() && msg.EventKey === 'qrscene_1')){
+    //TODO: 爱心计划
+
+
+  } else if ( msg.isClickEvent() && msg.EventKey==='INFO' ){
+    msg.sendResponseMessage(req, res, 'text', {
+      'content':'您还未绑定红贝缇会员卡，请输入您的红贝缇会员卡号和手机来绑定，中间用"/"隔开。例如: 1234567890/15914233333'
+    });
+
+
+  } else if (msg.isClickEvent() && msg.EventKey === 'LOCATION'){
   //   msg.sendResponseMessage(req, res, 'text', {
   //     content: '要搜索你附近的HonB门店，请在微信右下角点击［＋］后发送［位置］给我吧～'
   //   });
