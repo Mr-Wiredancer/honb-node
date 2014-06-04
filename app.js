@@ -150,6 +150,17 @@ var getShops = function(x, y){
     return shops;
 }
 
+var parse = function(content){
+  var re = /^(.+)(\/|\uFF0F)(.+)$/g;
+  var result = re.exec(content);
+  return result? [result[1], result[3]] : null;
+};
+
+var requestBind = function(openid, memberid, phoneno, success, failure){
+  //TODO: dummy
+  success();
+};
+
 app.use('/', routes);
 app.use('/users', users);
 app.get('/counter', function(req, res){
@@ -174,11 +185,36 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
     //TODO: 爱心计划
 
 
-  } else if ( msg.isClickEvent() && msg.EventKey==='INFO' ){
-    msg.sendResponseMessage(req, res, 'text', {
-      'content':'您还未绑定红贝缇会员卡，请输入您的红贝缇会员卡号和手机来绑定，中间用"/"隔开。例如: 1234567890/15914233333'
-    });
+  } else if( msg.isText() && WAITERS[msg.FromUserName]){
+    var result = parse(msg.Content);
+    if (!result){
+      msg.sendResponseMessage(req, res, 'text', {
+        'content': '您输入的格式不对。正确的格式应该是:\n会员卡号/手机号码'
+      });
+    }else{
+      var openid = msg.FromUserName
+        , memberid = result[0]
+        , cellno = result[1];
 
+      requestBind(openid, memberid, cellno, function(){
+        //TODO: SUCESS CALLBACK
+        msg.sendResponseMessage(req, res, 'text', {
+          'content': '搞定！'
+        });
+
+        delete WAITERS[msg.FromUserName];
+      }, function(){
+        //TODO: FAIL CALLBACK
+
+      });
+
+    }
+  } else if ( msg.isClickEvent() && msg.EventKey==='INFO' ){
+
+      msg.sendResponseMessage(req, res, 'text', {
+        'content':'您还未绑定红贝缇会员卡，请输入您的红贝缇会员卡号和手机来绑定，中间用"/"隔开。例如: 1234567890/15914233333'
+      });
+      WAITERS[msg.FromUserName] = 1;
 
   } else if (msg.isClickEvent() && msg.EventKey === 'LOCATION'){
   //   msg.sendResponseMessage(req, res, 'text', {
