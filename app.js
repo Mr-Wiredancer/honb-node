@@ -161,6 +161,11 @@ var requestBind = function(openid, memberid, phoneno, success, failure){
   success();
 };
 
+var checkBind = function(openid, success, failure){
+  //TODO: dummy
+  failure();
+}
+
 app.use('/', routes);
 app.use('/users', users);
 app.get('/counter', function(req, res){
@@ -199,7 +204,7 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
       requestBind(openid, memberid, cellno, function(){
         //TODO: SUCESS CALLBACK
         msg.sendResponseMessage(req, res, 'text', {
-          'content': '搞定！'
+          'content': '你的微信号已经成功绑定红贝缇会员卡！'
         });
 
         delete WAITERS[msg.FromUserName];
@@ -210,12 +215,21 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
 
     }
   } else if ( msg.isClickEvent() && msg.EventKey==='INFO' ){
+    checkBind(msg.FromUserName, function(){
+      //TODO: SUCCESS
 
+
+    }, function(){
+      //FAILURE
       msg.sendResponseMessage(req, res, 'text', {
         'content':'您还未绑定红贝缇会员卡，请输入您的红贝缇会员卡号和手机来绑定，中间用"/"隔开。例如: 1234567890/15914233333'
       });
       WAITERS[msg.FromUserName] = 1;
 
+
+    });
+
+      
   } else if (msg.isClickEvent() && msg.EventKey === 'LOCATION'){
   //   msg.sendResponseMessage(req, res, 'text', {
   //     content: '要搜索你附近的HonB门店，请在微信右下角点击［＋］后发送［位置］给我吧～'
