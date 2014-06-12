@@ -243,6 +243,7 @@ app.post('/weixin', [wechatHelper(APPID, APPSECRET, TOKEN)], function(req, res){
       getShops(22, 113)
     );
   } 
+  
   res.send('');
   // req.wechatMessage.sendResponseMessage(req, res, 'text', {content:util.format('%j', req.wechatMessage)});
   
